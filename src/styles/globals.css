@@ -20,3 +20,27 @@
   width: 400px;
   border: 1px solid black;
 }
+
+.answer-list {
+  display: flex;
+  flex-direction: row;
+  width: 400px;
+  justify-content: space-between;
+}
+
+.answer-item {
+  margin: 20px 0px;
+  list-style: none;
+  padding: 10px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.answer-item:hover {
+  background-color: silver;
+  transition: 0.3s;
+}
+
+.right-wrong {
+  height: 25px;
+}

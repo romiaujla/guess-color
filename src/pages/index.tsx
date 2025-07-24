@@ -31,6 +31,16 @@ export default function Home() {
   return (
     <section className="guess-color">
       <div className="answer" style={{ background: answer }}></div>
+
+      <ul className="answer-list">
+        <li className="answer-item"></li>
+        <li className="answer-item"></li>
+        <li className="answer-item"></li>
+      </ul>
+
+      <div className="right-wrong">
+        <span>Correct!</span>
+      </div>
     </section>
   );
 }
