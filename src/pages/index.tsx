@@ -1,5 +1,6 @@
 'use client';
 
+import { shuffle } from 'lodash';
 import { Geist, Geist_Mono } from "next/font/google";
 import { useEffect, useState } from "react";
 
@@ -14,7 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
-  const [answer, setAnswer] = useState('#FFFFFF');
+  const [answer, setAnswer] = useState<string>('#FFFFFF');
+  const [answerList, setAnswerList] = useState<Array<string>>([]);
 
   const randomColor = (): string => {
     let color = '#';
@@ -25,15 +27,14 @@ export default function Home() {
       color += letters[Math.floor(Math.random() * 16)];
     }
 
-    console.log('color', color);
-
     return color;
   }
 
   useEffect(() => {
     const color = randomColor();
     setAnswer(color);
-
+    const list = [color, randomColor(), randomColor()];
+    setAnswerList(shuffle(list));
   }, []);
 
   return (
@@ -41,9 +42,15 @@ export default function Home() {
       <div className="answer" style={{ background: answer }}></div>
 
       <ul className="answer-list">
-        <li className="answer-item"></li>
-        <li className="answer-item"></li>
-        <li className="answer-item"></li>
+        {
+          answerList.map((ans) => {
+            return (
+              <li className="answer-item" key={ans}>
+                {ans}
+              </li>
+            )
+          })
+        }
       </ul>
 
       <div className="right-wrong">
