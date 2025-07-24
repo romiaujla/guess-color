@@ -17,6 +17,7 @@ const geistMono = Geist_Mono({
 export default function Home() {
   const [answer, setAnswer] = useState<string>('#FFFFFF');
   const [answerList, setAnswerList] = useState<Array<string>>([]);
+  const [isCorrect, setIsCorrect] = useState<boolean | undefined>(undefined);
 
   const randomColor = (): string => {
     let color = '#';
@@ -30,11 +31,24 @@ export default function Home() {
     return color;
   }
 
-  useEffect(() => {
+  const handleAnswerClick = (color: string): void => {
+    if (answer === color) {
+      setIsCorrect(true);
+      generateNextQuestion();
+    } else {
+      setIsCorrect(false);
+    }
+  }
+
+  const generateNextQuestion = (): void => {
     const color = randomColor();
     setAnswer(color);
     const list = [color, randomColor(), randomColor()];
     setAnswerList(shuffle(list));
+  }
+
+  useEffect(() => {
+    generateNextQuestion();
   }, []);
 
   return (
@@ -45,7 +59,7 @@ export default function Home() {
         {
           answerList.map((ans) => {
             return (
-              <li className="answer-item" key={ans}>
+              <li className="answer-item" key={ans} onClick={() => handleAnswerClick(ans)}>
                 {ans}
               </li>
             )
@@ -54,8 +68,11 @@ export default function Home() {
       </ul>
 
       <div className="right-wrong">
-        <span>Correct!</span>
+        {isCorrect != null && (
+          <span>{isCorrect ? 'Correct!' : 'Wrong Answer!'}</span>
+        )}
       </div>
+
     </section>
   );
 }
